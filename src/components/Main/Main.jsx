@@ -23,9 +23,9 @@ const MainContainer = styled.main`
 const Main = () => {
   return (
     <MainContainer>
-      <TasksContainer tasks={[1, 2, 3, 4]} type={'To Do'} />
-      <TasksContainer tasks={[1, 2]} type={'Doing'} />
-      <TasksContainer tasks={[1, 2, 3]} type={'Done'} />
+      <TasksContainer tasks={[]} type={'To Do'} />
+      <TasksContainer tasks={[]} type={'Doing'} />
+      <TasksContainer tasks={[]} type={'Done'} />
     </MainContainer>
   )
 }
