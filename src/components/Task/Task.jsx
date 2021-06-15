@@ -8,6 +8,10 @@ const TaskContainer = styled.div`
   flex-direction: column;
   padding: 10px;
   gap: 10px;
+  cursor: pointer;
+  :hover {
+    opacity: 0.7;
+  }
   &.dragging {
     opacity: 0.4;
   }
