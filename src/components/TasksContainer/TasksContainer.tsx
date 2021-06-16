@@ -1,40 +1,33 @@
 import React, { FC, useState } from 'react'
 import styled from 'styled-components'
-
+import { Droppable } from 'react-beautiful-dnd'
 import Task from '../Task/Task'
 
-type TasksContainerProps = { type: string; tasks: string[] }
-
-const TasksContainer: FC<TasksContainerProps> = ({ type, tasks }) => {
+const TasksContainer = ({ column, tasks }) => {
   const [taskContent, setTaskContent] = useState('')
-  const [tasksList, setTaskList] = useState(tasks)
 
-  const handleAddTaskClick = () => {
-    setTaskList((prev) => [...prev, taskContent])
-    setTaskContent('')
-  }
-  const handleRemoveTask = (index: number): void => {
-    setTaskList((prev) => prev.filter((i, itemIndex) => itemIndex !== index))
-  }
-
-  const tasksListComponent = tasksList.map((i: string, index) => (
-    <Task
-      handleRemoveTask={handleRemoveTask}
-      key={index}
-      content={i}
-      index={index}
-    />
+  const tasksListComponents = tasks.map((task, index) => (
+    <Task key={task.id} task={task} index={index} />
   ))
 
   return (
     <TasksContainerStyle>
-      <Title>{type}</Title>
-      <TaskBoard>{tasksListComponent}</TaskBoard>
+      <Title>{column.title}</Title>
+      <Droppable droppableId={column.id}>
+        {(provided) => (
+          <TaskBoard ref={provided.innerRef} {...provided.droppableProps}>
+            {tasksListComponents}
+            {provided.placeholder}
+          </TaskBoard>
+        )}
+      </Droppable>
       <AddTask>
-        <AddTaskButton onClick={handleAddTaskClick}>
+        <AddTaskButton>
           <AddTaskPlus />
         </AddTaskButton>
         <AddTaskInput
+          placeholder="work in progress"
+          disabled
           value={taskContent}
           onChange={(e) => setTaskContent(e.target.value)}
         />

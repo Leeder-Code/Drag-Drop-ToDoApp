@@ -1,22 +1,26 @@
 import React, { FC, useState } from 'react'
+import { Draggable } from 'react-beautiful-dnd'
+
 import styled from 'styled-components'
 
-type TaskProps = {
-  index: number
-  content: String
-  handleRemoveTask: (index: number) => void
-}
-
-const Task: FC<TaskProps> = ({ index, content, handleRemoveTask }) => {
+const Task = ({ index, task }) => {
   return (
-    <TaskContainer>
-      <Status>
-        <StatusBar color={'#6cdbeb'} /> <StatusBar color={'#65dfc9'} />{' '}
-        <RemoveTask onClick={() => handleRemoveTask(index)}>X</RemoveTask>
-      </Status>
-      <Content>{content}</Content>
-      <Bottom />
-    </TaskContainer>
+    <Draggable draggableId={task.id} index={index}>
+      {(provided) => (
+        <TaskContainer
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          ref={provided.innerRef}
+        >
+          <Status>
+            <StatusBar color={'#6cdbeb'} /> <StatusBar color={'#65dfc9'} />{' '}
+            <RemoveTask>X</RemoveTask>
+          </Status>
+          <Content>{task.content}</Content>
+          <Bottom />
+        </TaskContainer>
+      )}
+    </Draggable>
   )
 }
 
@@ -29,7 +33,7 @@ const TaskContainer = styled.div`
   flex-direction: column;
   padding: 10px;
   gap: 10px;
-  cursor: pointer;
+  cursor: pointer !important;
   :hover {
     opacity: 0.7;
   }
@@ -51,6 +55,7 @@ const RemoveTask = styled.button`
   background-color: transparent;
   border: none;
   position: absolute;
+  cursor: inherit;
   right: 5px;
 `
 const Content = styled.div`
