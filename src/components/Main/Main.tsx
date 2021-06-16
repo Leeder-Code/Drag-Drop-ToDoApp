@@ -1,13 +1,17 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 import TasksContainer from '../TasksContainer/TasksContainer'
 
 const Main: FC = () => {
+  const toDoTasks: string[] = []
+  const doingTasks: string[] = []
+  const doneTasks: string[] = []
+
   return (
     <MainContainer>
-      <TasksContainer tasks={[]} type={'To Do'} />
-      <TasksContainer tasks={[]} type={'Doing'} />
-      <TasksContainer tasks={[]} type={'Done'} />
+      <TasksContainer tasks={toDoTasks} type={'To Do'} />
+      <TasksContainer tasks={doingTasks} type={'Doing'} />
+      <TasksContainer tasks={doneTasks} type={'Done'} />
     </MainContainer>
   )
 }

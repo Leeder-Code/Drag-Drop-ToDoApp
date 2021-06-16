@@ -9,47 +9,27 @@ const TasksContainer: FC<TasksContainerProps> = ({ type, tasks }) => {
   const [taskContent, setTaskContent] = useState('')
   const [tasksList, setTaskList] = useState(tasks)
 
-  const onDragOver = (e) => {
-    e.preventDefault()
-    const afterElement = getDragAfterElement(e.target, e.clientY)
-    const draggable = document.querySelector('.dragging')
-    if (afterElement == null) {
-      e.target.appendChild(draggable)
-    } else {
-      e.target.insertBefore(draggable, afterElement)
-    }
-  }
-
-  const getDragAfterElement = (container, y) => {
-    const draggableElements = [
-      ...container.querySelectorAll('.task:not(.dragging)'),
-    ]
-    return draggableElements.reduce(
-      (closest, child) => {
-        const box = child.getBoundingClientRect()
-        const offset = y - box.top - box.height / 2
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child }
-        } else {
-          return closest
-        }
-      },
-      { offset: Number.NEGATIVE_INFINITY }
-    ).element
-  }
   const handleAddTaskClick = () => {
     setTaskList((prev) => [...prev, taskContent])
     setTaskContent('')
   }
+  const handleRemoveTask = (index: number): void => {
+    setTaskList((prev) => prev.filter((i, itemIndex) => itemIndex !== index))
+  }
 
-  const tasksListComponent = tasksList.map((i: string, index: React.Key) => (
-    <Task key={index} content={i} />
+  const tasksListComponent = tasksList.map((i: string, index) => (
+    <Task
+      handleRemoveTask={handleRemoveTask}
+      key={index}
+      content={i}
+      index={index}
+    />
   ))
 
   return (
     <TasksContainerStyle>
       <Title>{type}</Title>
-      <TaskBoard onDragOver={onDragOver}>{tasksListComponent}</TaskBoard>
+      <TaskBoard>{tasksListComponent}</TaskBoard>
       <AddTask>
         <AddTaskButton onClick={handleAddTaskClick}>
           <AddTaskPlus />

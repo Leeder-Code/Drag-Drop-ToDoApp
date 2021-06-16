@@ -1,36 +1,18 @@
 import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 
-interface TaskProps {
-  content: string[]
+type TaskProps = {
+  index: number
+  content: String
+  handleRemoveTask: (index: number) => void
 }
 
-const Task: FC<{ content: string }> = ({ content }) => {
-  const onDragStart = (e) => {
-    const target = e.target
-    target.classList.add('dragging')
-  }
-  const onDragEnd = (e) => {
-    const target = e.target
-    target.classList.remove('dragging')
-  }
-  const onDragOver = (e) => {
-    e.preventDefault()
-    e.stopPropagation()
-  }
-  const handleRemove = () => {}
-
+const Task: FC<TaskProps> = ({ index, content, handleRemoveTask }) => {
   return (
-    <TaskContainer
-      onDragStart={onDragStart}
-      onDragOver={onDragOver}
-      onDragEnd={onDragEnd}
-      draggable
-      className="task"
-    >
+    <TaskContainer>
       <Status>
         <StatusBar color={'#6cdbeb'} /> <StatusBar color={'#65dfc9'} />{' '}
-        <RemoveTask onClick={handleRemove}>X</RemoveTask>
+        <RemoveTask onClick={() => handleRemoveTask(index)}>X</RemoveTask>
       </Status>
       <Content>{content}</Content>
       <Bottom />
@@ -50,9 +32,6 @@ const TaskContainer = styled.div`
   cursor: pointer;
   :hover {
     opacity: 0.7;
-  }
-  &.dragging {
-    opacity: 0.4;
   }
 `
 const Status = styled.div`
