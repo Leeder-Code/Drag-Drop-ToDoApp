@@ -2,6 +2,7 @@ import Head from 'next/head'
 import TopBar from 'src/components/TopBar/TopBar'
 import Main from 'src/components/Main/Main'
 import styled from 'styled-components'
+import { FC } from 'react'
 
 const Layout = styled.div`
   display: flex;
@@ -13,7 +14,7 @@ const Layout = styled.div`
   background: ${({ theme }) =>
     `linear-gradient(to right top, ${theme.colors.primary}, ${theme.colors.secondary})`};
 `
-const LayoutCircle = styled.div`
+const LayoutCircle = styled.div<{ side: String }>`
   background-color: red;
   background: linear-gradient(
     to right bottom,
@@ -24,10 +25,11 @@ const LayoutCircle = styled.div`
   width: 20rem;
   position: absolute;
   border-radius: 50%;
-  ${(p) => (p.left ? 'bottom: 2%; left: 5%' : 'top: 5%; right: 7%;')};
+  ${(p) =>
+    p.side === 'left' ? 'bottom: 2%; left: 5%' : 'top: 5%; right: 7%;'};
 `
 
-export default function Home({ articles }) {
+const Home: FC = () => {
   return (
     <>
       <Head>
@@ -41,14 +43,15 @@ export default function Home({ articles }) {
         />
       </Head>
       <Layout>
-        <LayoutCircle left />
-        <LayoutCircle />
+        <LayoutCircle side="left" />
+        <LayoutCircle side="right" />
         <TopBar />
         <Main />
       </Layout>
     </>
   )
 }
+export default Home
 
 // export const getStaticProps = async () => {
 //   const res = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=6')

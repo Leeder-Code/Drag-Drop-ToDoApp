@@ -1,5 +1,11 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
+
+const TopBar: FC = () => {
+  return <TopBarContainer>NavBar ^.^</TopBarContainer>
+}
+
+export default TopBar
 
 const TopBarContainer = styled.div`
   height: 65px;
@@ -16,8 +22,3 @@ const TopBarContainer = styled.div`
   display: flex;
   align-items: center;
 `
-const TopBar = () => {
-  return <TopBarContainer>NavBar ^.^</TopBarContainer>
-}
-
-export default TopBar

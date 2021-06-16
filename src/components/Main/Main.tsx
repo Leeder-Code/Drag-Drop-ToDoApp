@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 import TasksContainer from '../TasksContainer/TasksContainer'
+
+const Main: FC = () => {
+  return (
+    <MainContainer>
+      <TasksContainer tasks={[]} type={'To Do'} />
+      <TasksContainer tasks={[]} type={'Doing'} />
+      <TasksContainer tasks={[]} type={'Done'} />
+    </MainContainer>
+  )
+}
+
+export default Main
+
 const MainContainer = styled.main`
   flex: 0.9;
   width: 80%;
@@ -19,15 +32,3 @@ const MainContainer = styled.main`
   flex-wrap: wrap;
   backdrop-filter: blur(1.7rem);
 `
-
-const Main = () => {
-  return (
-    <MainContainer>
-      <TasksContainer tasks={[]} type={'To Do'} />
-      <TasksContainer tasks={[]} type={'Doing'} />
-      <TasksContainer tasks={[]} type={'Done'} />
-    </MainContainer>
-  )
-}
-
-export default Main
