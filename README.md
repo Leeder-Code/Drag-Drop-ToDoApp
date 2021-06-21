@@ -4,5 +4,4 @@
 
 - yarn install
 - yarn dev
-
-or check it **[here](https://to-do-app-leeder-code.vercel.app)** 
+- or check it **[here](https://to-do-app-leeder-code.vercel.app)** 
